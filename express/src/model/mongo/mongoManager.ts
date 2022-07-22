@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 export class MongoManager extends EventEmitter {
 
-    private readonly _cardModel:any
+    private readonly _cardModel: any
 
 
     constructor() {
@@ -31,21 +31,36 @@ export class MongoManager extends EventEmitter {
     }
 
 
-
     /**
      * 全部の部屋のデータの取得
      * @param collection
      */
-    public getAllList = async () => {
+    public get = async () => {
 
         const result = await this._cardModel.find().sort({room_id: 1});
         return result;
     }
+    public post = async (obj) => {
+        try{
+            const count = await this._cardModel.find().count()
+            const card = new this._cardModel({
+                name: obj.name,
+                order: count
+            });
 
+            const result = await card.save();
+            return  {
+                "status":"ok",
+                "result":result
 
+            };
+        }catch (e) {
+            return {
+                "status":"error"
+            }
+        }
 
-
-
+    }
 
 
 }

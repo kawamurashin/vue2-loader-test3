@@ -22,11 +22,11 @@ export class ModelManager extends EventEmitter {
 
     public get = async () =>
     {
+        return await this._mongoManger.get();
 
     }
-    public post = async (obj: any) => {
-
-
+    public post = async (obj) => {
+        return await this._mongoManger.post(obj);
     }
 
 
